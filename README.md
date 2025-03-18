@@ -1,6 +1,6 @@
 # Conteo - NEXT.JS | REACT QUERY | TYPESCRIPT
 
-**Demo**: [https://seek-app-next.netlify.app](https://seek-app-next.netlify.app)  
+**Demo**: [https://conteo-prod.netlify.app/](https://conteo-prod.netlify.app/)  
 *Regístrate, verifica tu correo e inicia sesión para explorar todas las funcionalidades.*
 
 ---
