@@ -10,7 +10,7 @@
 **Conteo** es una aplicación web moderna y eficiente para la gestión de productos. Desarrollada con las mejores prácticas y tecnologías actuales, esta aplicación permite crear productos, listar productos y subir imágenes. El proyecto está desplegado en Netlify y ha sido probado con Cypress para garantizar calidad y confiabilidad.  
 
 ### Tecnologías utilizadas:
-- **Frontend**: [Next.js](https://nextjs.org/), [React Query](https://tanstack.com/query), [Tailwind CSS](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.dev/), [Recharts](https://recharts.org/)  
+- **Frontend**: [Next.js](https://nextjs.org/), [React Query](https://tanstack.com/query), [Tailwind CSS](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.dev/),
 - **Backend**: Integrado con servicios de Node.js y TypeScript.
 - **Pruebas**: [Cypress](https://www.cypress.io/) para tests end-to-end.
 - **Despliegue**: [Netlify](https://www.netlify.com/)
