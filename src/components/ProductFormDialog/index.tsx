@@ -11,21 +11,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+
 import {
   ProductFormFields,
   ProductFormInputs,
-} from "./components/TaskFormFields";
+} from "./components/ProductFormFields";
 
-interface TaskFormDialogProps {
+interface ProductFormDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   onSubmit: SubmitHandler<ProductFormInputs>;
   initialValues?: Partial<ProductFormInputs>;
   isEditing?: boolean;
   errorMessage?: string | null;
+  isLoading?: boolean;
 }
 
-const TaskFormDialog: React.FC<TaskFormDialogProps> = (props) => {
+const ProductFormDialog: React.FC<ProductFormDialogProps> = (props) => {
   const {
     isOpen,
     onOpenChange,
@@ -33,7 +35,9 @@ const TaskFormDialog: React.FC<TaskFormDialogProps> = (props) => {
     initialValues,
     errorMessage,
     isEditing = false,
+    isLoading,
   } = props;
+
   const methods = useForm<ProductFormInputs>();
 
   useEffect(() => {
@@ -50,10 +54,10 @@ const TaskFormDialog: React.FC<TaskFormDialogProps> = (props) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="max-h-[90vh] sm:max-h-[90vh] overflow-y-auto w-full  rounded-lg">
         <DialogHeader>
           <DialogTitle>
-            {isEditing ? "Editar Tarea" : "Agregar Nueva Tarea"} <br />
+            {isEditing ? "Editar Producto" : "Agregar Nuevo Producto"} <br />
             {errorMessage && (
               <span className="mt-2 text-sm text-red-500 font-medium">
                 {errorMessage}
@@ -64,16 +68,22 @@ const TaskFormDialog: React.FC<TaskFormDialogProps> = (props) => {
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleFormSubmit)}>
             <ProductFormFields initialValues={initialValues} />
+            {errorMessage && (
+              <span className="mt-2 text-sm text-red-500 font-medium">
+                {errorMessage}
+              </span>
+            )}
             <DialogFooter>
               <Button
                 variant="destructive"
+                type="button"
                 className="sm:mt-0 mt-2"
                 onClick={() => onOpenChange(false)}
               >
                 Cancelar
               </Button>
-              <Button type="submit">
-                {isEditing ? "Actualizar Tarea" : "Agregar Tarea"}
+              <Button type="submit" isLoading={isLoading}>
+                {isEditing ? "Actualizar Producto" : "Agregar Producto"}
               </Button>
             </DialogFooter>
           </form>
@@ -83,4 +93,4 @@ const TaskFormDialog: React.FC<TaskFormDialogProps> = (props) => {
   );
 };
 
-export default TaskFormDialog;
+export default ProductFormDialog;

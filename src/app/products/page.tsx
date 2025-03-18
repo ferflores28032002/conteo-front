@@ -10,13 +10,15 @@ import {
   MaxWidthWrapper,
 } from "@/components/";
 
-import TaskFormDialog from "@/components/TaskFormDialog";
+import { ProductFormInputs } from "@/components/ProductFormDialog/components/ProductFormFields";
+import ProductFormDialog from "@/components/ProductFormDialog";
 
 import { ProductsColumn } from "@/helpers/Products/ProductsColumn";
 import { useCreateProduct } from "@/hooks/products/useCreateProduct";
 import { useListProducts } from "@/hooks/products/useListProducts";
 import { useRedirectIfUnauthenticated } from "../../hooks/shared/useRedirectIfUnauthenticated";
-import { ProductFormInputs } from "@/components/TaskFormDialog/components/TaskFormFields";
+
+import { ApiError } from "@/services/auth/LoginService";
 
 const Page = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -30,9 +32,10 @@ const Page = () => {
     mutate.mutate(formData, {
       onSuccess: () => {
         setIsDialogOpen(false);
+        setErrorMessage(null);
       },
-      onError: (error) => {
-        console.error("Error creating product:", error);
+      onError: (error: ApiError) => {
+        setErrorMessage(error.response.data.message);
       },
     });
   };
@@ -61,11 +64,12 @@ const Page = () => {
 
         <DataTable columns={ProductsColumn} data={data ? data : []} />
 
-        <TaskFormDialog
+        <ProductFormDialog
           isOpen={isDialogOpen}
           onOpenChange={setIsDialogOpen}
           onSubmit={handleAddTaskSubmit}
           isEditing={false}
+          isLoading={mutate.isPending}
           errorMessage={errorMessage}
         />
       </MaxWidthWrapper>

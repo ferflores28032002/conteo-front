@@ -29,7 +29,7 @@ const DescriptionTextarea = <T extends FieldValues>(props: DescriptionTextareaPr
       <Textarea
         {...register(name, { required: "La descripción es obligatoria" })}
         title="Descripción"
-        placeholder="Ingresa la descripción de la tarea"
+        placeholder="Ingresa la descripción del producto"
         className={cn({ "focus-visible:ring-red-500": !!error })}
       />
       {error && <p className="text-sm text-red-500 mt-1">{error}</p>}

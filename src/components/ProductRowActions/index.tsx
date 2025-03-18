@@ -10,15 +10,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import TaskDetailModal from "./components/TaskDetailModal";
+import { ProductFormInputs } from "../ProductFormDialog/components/ProductFormFields";
+import ProductFormDialog from "../ProductFormDialog";
 
 import { useDeleteProduct } from "@/hooks/products/useDeleteProduct";
 import { useEditProduct } from "@/hooks/products/useEditProduct";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import TaskFormDialog from "../TaskFormDialog";
-import { ProductFormInputs } from "../TaskFormDialog/components/TaskFormFields";
-import TaskDetailModal from "./components/TaskDetailModal";
 
-const TaskRowActions = ({ row }: any) => {
+import { ApiError } from "@/services/auth/LoginService";
+
+const ProductRowActions = ({ row }: any) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState<boolean>(false);
@@ -39,8 +41,11 @@ const TaskRowActions = ({ row }: any) => {
           setIsDialogOpen(false);
           setErrorMessage(null);
         },
-        onError: (error) => {
+        onError: (error: ApiError) => {
+          console.log(error);
+          setErrorMessage(error.response.data.message);
         },
+
       }
     );
   };
@@ -60,7 +65,7 @@ const TaskRowActions = ({ row }: any) => {
         deleteTask.mutate(row.original.id);
         Swal.fire({
           title: "¡Eliminado!",
-          text: "Tu tarea ha sido eliminada.",
+          text: "Tu producto se ha eliminado.",
           icon: "success",
           confirmButtonColor: "#2563EB",
         });
@@ -74,7 +79,7 @@ const TaskRowActions = ({ row }: any) => {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <span className="sr-only">
-              Opciones de la tarea {row.original.title}
+              Opciones del producto {row.original.title}
             </span>
             <DotsHorizontalIcon className="h-4 w-4" />
           </Button>
@@ -91,7 +96,7 @@ const TaskRowActions = ({ row }: any) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <TaskFormDialog
+      <ProductFormDialog
         isOpen={isDialogOpen}
         onOpenChange={setIsDialogOpen}
         onSubmit={handleEditSubmit}
@@ -101,8 +106,9 @@ const TaskRowActions = ({ row }: any) => {
           name: row.original.name,
           description: row.original.description,
           image: row.original.image,
-          
+          quantity: row.original.quantity,
         }}
+        isLoading={updateTask.isPending}
         isEditing={true}
       />
       <TaskDetailModal
@@ -114,4 +120,4 @@ const TaskRowActions = ({ row }: any) => {
   );
 };
 
-export default TaskRowActions;
+export default ProductRowActions;

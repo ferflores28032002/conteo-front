@@ -7,7 +7,7 @@ describe("Home Page", () => {
 
     // Verificar la descripción principal
     cy.get("#cypress-description-home").contains(
-      "¡Descubre cómo organizar y supervisar tus pendientes nunca fue tan fácil! con Conteo, puedes visualizar tus tareas, actualizarlas en diferentes estados y mantener todo bajo control. Una app diseñada para ayudarte a priorizar, completar tus objetivos y simplificar tu vida, sin complicaciones."
+      "¡Descubre cómo organizar y supervisar tus productos nunca fue tan fácil! con Conteo, puedes visualizar tus productos, actualizarlos en diferentes estados y mantener todo bajo control. Una app diseñada para ayudarte a priorizar, completar tus objetivos y simplificar tu vida, sin complicaciones."
     );
 
     // Verificar que el botón de registro esté visible y redirige correctamente
@@ -101,12 +101,12 @@ describe("Footer Component", () => {
   it("checks the main heading and text in the footer", () => {
     // Verificar el texto principal del footer
     cy.contains(
-      "con Conteo, cada tarea importa. Organiza, supervisa y alcanza tus metas con facilidad."
+      "con Conteo, cada producto importa. Organiza, supervisa y alcanza tus metas con facilidad."
     ).should("be.visible");
 
     // Verificar el texto secundario
     cy.contains(
-      "Haz que cada tarea cuente con Conteo y alcanza tus metas fácilmente."
+      "Haz que cada producto cuente con Conteo y alcanza tus metas fácilmente."
     ).should("be.visible");
   });
 
@@ -121,7 +121,7 @@ describe("Footer Component", () => {
   it("checks the copyright text", () => {
     // Verificar que el texto de derechos de autor esté presente
     cy.contains(
-      `© ${new Date().getFullYear()} Seek todos los derechos reservados.`
+      `© ${new Date().getFullYear()} Conteo todos los derechos reservados.`
     ).should("be.visible");
   });
 

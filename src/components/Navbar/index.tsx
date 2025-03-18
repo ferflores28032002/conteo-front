@@ -68,6 +68,12 @@ const Navbar = () => {
                     <DropdownMenuItem onClick={handleLogout}>
                       Logout
                     </DropdownMenuItem>
+
+                    {token && user && (
+                      <DropdownMenuItem >
+                        <Link href="/products">Products</Link>
+                      </DropdownMenuItem>
+                    )}
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}

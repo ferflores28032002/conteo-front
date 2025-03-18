@@ -1,8 +1,14 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
 import { useFormContext } from "react-hook-form";
+
 import NameInput from "@/components/NameInput";
-import { Label } from "@/components/ui/label";
+import ImageLabel from "../ImageLabel";
+import ImagePreview from "../ImagePreview";
+import DescriptionTextarea from "@/components/DescriptionTextarea";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 import { cn } from "@/lib/utils";
 
 export type ProductFormInputs = {
@@ -23,7 +29,6 @@ export const ProductFormFields: React.FC<ProductFormFieldsProps> = ({
   const {
     register,
     setValue,
-    watch,
     formState: { errors },
   } = useFormContext<ProductFormInputs>();
 
@@ -33,9 +38,9 @@ export const ProductFormFields: React.FC<ProductFormFieldsProps> = ({
   useEffect(() => {
     if (initialValues.image) {
       if (typeof initialValues.image === "string") {
-        setImagePreview(initialValues.image); // Usar directamente la URL
+        setImagePreview(initialValues.image);
       } else {
-        setImagePreview(URL.createObjectURL(initialValues.image)); // Si es un archivo
+        setImagePreview(URL.createObjectURL(initialValues.image));
       }
     }
   }, [initialValues.image]);
@@ -100,36 +105,16 @@ export const ProductFormFields: React.FC<ProductFormFieldsProps> = ({
       </div>
 
       <div className="mb-6">
-        <Label htmlFor="description">Descripción</Label>
-        <textarea
-          {...register("description", {
-            required: "La descripción es requerida",
-          })}
-          defaultValue={initialValues.description || ""}
-          className="w-full p-2 border rounded-md"
-          placeholder="Descripción"
+        <DescriptionTextarea
+          name="description"
+          register={register}
+          error={errors.description?.message}
         />
-        {errors.description && (
-          <p className="text-sm text-red-500">{errors.description.message}</p>
-        )}
       </div>
 
       <div className="mb-6">
-        <Label htmlFor="image">Imagen</Label>
-        <div
-          className="w-32 h-32 border-dashed border-2 border-gray-400 flex items-center justify-center cursor-pointer"
-          onClick={handleClick}
-        >
-          {imagePreview ? (
-            <img
-              src={imagePreview}
-              alt="Vista previa"
-              className="w-full h-full object-cover rounded-md"
-            />
-          ) : (
-            <span className="text-gray-500">Haz clic para subir</span>
-          )}
-        </div>
+        <ImageLabel htmlFor="image" />
+        <ImagePreview handleClick={handleClick} imagePreview={imagePreview} />
         <input
           type="file"
           accept="image/png, image/jpeg"
@@ -137,9 +122,6 @@ export const ProductFormFields: React.FC<ProductFormFieldsProps> = ({
           ref={fileInputRef}
           onChange={handleImageChange}
         />
-        {errors.image && (
-          <p className="text-sm text-red-500">{errors.image.message}</p>
-        )}
       </div>
 
       <div className="mb-6">

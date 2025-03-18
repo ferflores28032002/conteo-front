@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
-
-import TaskRowActions from "@/components/TaskRowActions";
-import { Product } from "@/services/products/ListProductService";
 import Image from "next/image";
+
+import ProductRowActions from "@/components/ProductRowActions";
+import { Product } from "@/services/products/ListProductService";
 
 export const ProductsColumn: ColumnDef<Product>[] = [
   {
@@ -51,6 +51,15 @@ export const ProductsColumn: ColumnDef<Product>[] = [
       </div>
     ),
   },
+  {
+    accessorKey: "quantity",
+    header: "Cantidad",
+    cell: ({ row }) => (
+      <div className="truncate max-w-[200px]" title={row.getValue("quantity")}>
+        {row.getValue("quantity")}
+      </div>
+    ),
+  },
 
   {
     accessorKey: "creator.name",
@@ -74,6 +83,6 @@ export const ProductsColumn: ColumnDef<Product>[] = [
   {
     id: "Opciones",
     enableHiding: false,
-    cell: ({ row }) => <TaskRowActions row={row} />,
+    cell: ({ row }) => <ProductRowActions row={row} />,
   },
 ];
